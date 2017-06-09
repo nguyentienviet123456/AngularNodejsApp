@@ -11,7 +11,8 @@ import { ChangeprofileComponent } from './changeprofile/changeprofile.component'
 import { SearchingAndExploreComponent } from './searching-and-explore/searching-and-explore.component';
 import { PostComponent } from './post/post.component';
 import { RegisterComponent } from './register/register.component';
-
+import { UserService } from "app/user.service";
+import { PhotoService } from "app/photo.service"; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,7 @@ import { RegisterComponent } from './register/register.component';
       }
     ])
   ],
-  providers: [],
+  providers: [UserService,PhotoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
