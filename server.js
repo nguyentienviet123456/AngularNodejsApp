@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
+const session = require('express-session')
 const mongoose = require('mongoose');
 const user_api = require('./server/routes/user_api');
 const photo_api = require('./server/routes/photo_api');
@@ -19,8 +20,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 //body parser middleware
 app.use(bodyParser.json());
 // passport middleware
+ 
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 
 require ('./config/passport')(passport);
 

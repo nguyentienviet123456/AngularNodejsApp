@@ -12,7 +12,7 @@ import { Photo } from "app/photo";
 })
 export class HomeComponent implements OnInit {
 
-  public photos: Photo;
+  public photos: any[];
 
   constructor(private _photoService: PhotoService) { }
 

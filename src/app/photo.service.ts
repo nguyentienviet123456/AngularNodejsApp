@@ -13,11 +13,11 @@ export class PhotoService {
   private _putUrl = "/photo_api/photo/";
   constructor(private _http: Http) { }
   // get get photos
-  getPhotos(): Observable<Photo[]> {
+  getPhotos(): Observable<any[]> {
     return this._http
       .get(this._getUrl)
       .map((response: Response) => response.json())
-      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+      
   }
   // end get photos
 

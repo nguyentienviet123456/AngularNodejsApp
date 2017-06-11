@@ -59,12 +59,13 @@ router.post('/register', function (req, res, next) {
         }
     })
 });
+
 // authenticate
-router.post('/authenticate', function(req, res, next) {
+router.post('/authen', (req, res, next) => {
     const username = req.body.username;
     const userpassword = req.body.userpassword;
 
-    User.getUserByUserName(username, function (err, user) {
+    User.getUserByUsername(username, function (err, user) {
         if (err) throw err;
         if (!user) {
             return res.json({ success: false, msg: 'user not found' });
@@ -73,7 +74,7 @@ router.post('/authenticate', function(req, res, next) {
         User.comparePassword(userpassword, user.userpassword, function (err, isMatch) {
             if (err) throw err;
             if (isMatch) {
-                const token = jwt.sign(user, config.secret, {
+                const token = jwt.sign(user, "mysecret", {
                     expiresIn: 604800 // 1 week
                 });
                 res.json({
@@ -81,14 +82,13 @@ router.post('/authenticate', function(req, res, next) {
                     token: 'JWT ' + token,
                     user: {
                         id: user._id,
-                        username: String,
+                        username: user.username,
                         mail: user.useremail,
                         fullname: user.fullname,
                         nickname: user.nickname,
                         phone: user.phone,
                         gender: user.gender,
                         information: user.personal_information
-
                     }
                 });
             } else {
@@ -97,6 +97,12 @@ router.post('/authenticate', function(req, res, next) {
         });
     });
 });
+
+//profile
+router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    res.json({user: req.user});
+});
+
 // update user into database
 router.put('/video/:id', function (req, res) {
     console.log('update a user');
